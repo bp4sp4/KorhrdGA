@@ -1,0 +1,310 @@
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #f4f5f7;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.heading {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.count {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.addBtn {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: #4f46e5;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.addBtn:hover {
+  background: #4338ca;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.td {
+  padding: 12px 14px;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.row:hover .td {
+  background: #fafafe;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: #9ca3af;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.editBtn,
+.delBtn {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+}
+
+.editBtn:hover {
+  background: #f3f4f6;
+}
+
+.delBtn {
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.delBtn:hover {
+  background: #fef2f2;
+}
+
+.empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* 상태 뱃지 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.status정상 {
+  color: #065f46;
+  background: #d1fae5;
+}
+
+.status철회 {
+  color: #9a3412;
+  background: #ffedd5;
+}
+
+.status실효 {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.status정산 {
+  color: #1e40af;
+  background: #dbeafe;
+}
+
+.status보류 {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+/* 모달 */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.modal {
+  width: 100%;
+  max-width: 560px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modalTitle {
+  margin: 0 0 18px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0 12px;
+  height: 42px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+}
+
+.textarea {
+  height: auto;
+  padding: 10px 12px;
+  min-height: 72px;
+  resize: vertical;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.modalError {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.saveBtn {
+  height: 42px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: #4f46e5;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.saveBtn:hover {
+  background: #4338ca;
+}
+
+.saveBtn:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  height: 42px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background: #f3f4f6;
+}
+
+@media (max-width: 560px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
