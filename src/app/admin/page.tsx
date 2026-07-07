@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import AppShell from '@/components/AppShell'
+import AppHeader from '@/components/AppHeader'
 import type { Sale } from '@/lib/types'
 import AdminClient, { type Agent } from './AdminClient'
+import styles from '@/styles/crud.module.css'
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -35,11 +36,12 @@ export default async function AdminPage() {
     .order('contract_date', { ascending: false, nullsFirst: false })
 
   return (
-    <AppShell displayName={displayName} isAdmin>
+    <div className={styles.page}>
+      <AppHeader displayName={displayName} isAdmin />
       <AdminClient
         agents={(agents as Agent[]) ?? []}
         sales={(sales as Sale[]) ?? []}
       />
-    </AppShell>
+    </div>
   )
 }

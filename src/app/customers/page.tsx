@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import AppShell from '@/components/AppShell'
+import AppHeader from '@/components/AppHeader'
 import type { Customer } from '@/lib/types'
 import CustomersClient from './CustomersClient'
+import styles from '@/styles/crud.module.css'
 
 export default async function CustomersPage() {
   const supabase = await createClient()
@@ -28,8 +29,9 @@ export default async function CustomersPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <AppShell displayName={displayName} isAdmin={isAdmin}>
+    <div className={styles.page}>
+      <AppHeader displayName={displayName} isAdmin={isAdmin} />
       <CustomersClient initial={(customers as Customer[]) ?? []} userId={user.id} />
-    </AppShell>
+    </div>
   )
 }

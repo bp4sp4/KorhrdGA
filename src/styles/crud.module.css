@@ -8,6 +8,13 @@
 
 .wrap {
   width: 100%;
+  padding: 28px 32px;
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    padding: 18px 16px;
+  }
 }
 
 .toolbar {
@@ -350,6 +357,85 @@
 .status보류 {
   color: #6b7280;
   background: #f3f4f6;
+}
+
+/* 오른쪽 드로어 (개별등록/수정) */
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.5);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 60;
+}
+
+.drawer {
+  width: 480px;
+  max-width: 100%;
+  height: 100dvh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
+  animation: drawerSlide 0.2s ease;
+}
+
+@keyframes drawerSlide {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.drawerTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.drawerClose {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  color: #6b7280;
+  border-radius: 8px;
+}
+
+.drawerClose:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.drawerBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drawerFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #f3f4f6;
 }
 
 /* 모달 */

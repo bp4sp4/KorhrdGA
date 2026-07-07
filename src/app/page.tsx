@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import AppShell from '@/components/AppShell'
+import AppHeader from '@/components/AppHeader'
 import styles from './page.module.css'
 
 export default async function HomePage() {
@@ -26,10 +26,13 @@ export default async function HomePage() {
   if (!isAdmin) redirect('/students')
 
   return (
-    <AppShell displayName={displayName} isAdmin={isAdmin}>
-      <h2 className={styles.greeting}>{displayName} 님, 안녕하세요 👋</h2>
+    <div className={styles.page}>
+      <AppHeader displayName={displayName} isAdmin={isAdmin} />
 
-      <div className={styles.grid}>
+      <main className={styles.main}>
+        <h2 className={styles.greeting}>{displayName} 님, 안녕하세요 👋</h2>
+
+        <div className={styles.grid}>
           <Link href="/students" className={styles.card}>
             <h3 className={styles.cardTitle}>학습자 신규</h3>
             <p className={styles.cardDesc}>계약·매출 기록 · 상태 관리</p>
@@ -49,6 +52,7 @@ export default async function HomePage() {
             </Link>
           )}
         </div>
-    </AppShell>
+      </main>
+    </div>
   )
 }

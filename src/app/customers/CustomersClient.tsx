@@ -502,14 +502,24 @@ export default function CustomersClient({
       )}
 
       {open && (
-        <div className={styles.overlay} onClick={() => setOpen(false)}>
+        <div className={styles.drawerOverlay} onClick={() => setOpen(false)}>
           <form
-            className={styles.modal}
+            className={styles.drawer}
             onClick={(e) => e.stopPropagation()}
             onSubmit={save}
           >
-            <h2 className={styles.modalTitle}>{editingId ? '가망고객 수정' : '개별등록'}</h2>
-            <div className={styles.formGrid}>
+            <div className={styles.drawerHeader}>
+              <h2 className={styles.drawerTitle}>{editingId ? '가망고객 수정' : '개별등록'}</h2>
+              <button
+                type="button"
+                className={styles.drawerClose}
+                onClick={() => setOpen(false)}
+                aria-label="닫기"
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.drawerBody}>
               <label className={styles.field}>
                 <span className={styles.label}>고객명 *</span>
                 <input
@@ -618,7 +628,7 @@ export default function CustomersClient({
               </label>
               {error && <p className={styles.modalError}>{error}</p>}
             </div>
-            <div className={styles.modalActions}>
+            <div className={styles.drawerFooter}>
               <button
                 className={styles.cancelBtn}
                 type="button"
