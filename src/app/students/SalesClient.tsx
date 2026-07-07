@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import * as XLSX from 'xlsx'
 import { createClient } from '@/lib/supabase/client'
 import {
   type Sale,
@@ -44,6 +45,29 @@ const EMPTY: FormState = {
   notes: '',
 }
 
+const PAGE_SIZE = 20
+
+// 엑셀 헤더 (일괄등록 템플릿 · 다운로드 공통)
+const EXCEL_HEADERS = [
+  '고객명',
+  '상품',
+  '보험사',
+  '증권번호',
+  '월납입료',
+  '총액',
+  '수수료',
+  '결제수단',
+  '청약일',
+  '납입기간(개월)',
+  '상태',
+  '상태변경일',
+  '메모',
+] as const
+
+const PM_LABEL_TO_VALUE: Record<string, string> = Object.fromEntries(
+  Object.entries(PAYMENT_METHOD_LABELS).map(([v, l]) => [l, v]),
+)
+
 function won(n: number | null): string {
   return n == null ? '-' : n.toLocaleString('ko-KR')
 }
@@ -58,6 +82,38 @@ function toNum(s: string): number | null {
 function toInt(s: string): number | null {
   const n = toNum(s)
   return n == null ? null : Math.trunc(n)
+}
+
+// 엑셀 셀 → 'YYYY-MM-DD' 문자열
+function toDateStr(v: unknown): string | null {
+  if (v == null || v === '') return null
+  if (v instanceof Date) return v.toISOString().slice(0, 10)
+  const s = String(v).trim()
+  if (!s) return null
+  // 엑셀 날짜 시리얼(숫자)
+  if (/^\d+(\.\d+)?$/.test(s)) {
+    const serial = Number(s)
+    if (serial > 59) {
+      const ms = (serial - 25569) * 86400 * 1000
+      const d = new Date(ms)
+      if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10)
+    }
+  }
+  const m = s.match(/^(\d{4})[.\-/]\s*(\d{1,2})[.\-/]\s*(\d{1,2})/)
+  if (m) {
+    const [, y, mo, d] = m
+    return `${y}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`
+  }
+  return s.slice(0, 10)
+}
+
+function inRange(value: string | null, from: string, to: string): boolean {
+  if (!from && !to) return true
+  if (!value) return false
+  const v = value.slice(0, 10)
+  if (from && v < from) return false
+  if (to && v > to) return false
+  return true
 }
 
 export default function SalesClient({
@@ -81,7 +137,59 @@ export default function SalesClient({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const totalCommission = rows.reduce((sum, r) => sum + (r.commission ?? 0), 0)
+  // 필터 상태
+  const [search, setSearch] = useState('')
+  const [regFrom, setRegFrom] = useState('')
+  const [regTo, setRegTo] = useState('')
+  const [payFrom, setPayFrom] = useState('')
+  const [payTo, setPayTo] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
+  const [page, setPage] = useState(1)
+
+  // 일괄등록 상태
+  const [bulkOpen, setBulkOpen] = useState(false)
+  const [bulkBusy, setBulkBusy] = useState(false)
+  const [bulkMsg, setBulkMsg] = useState<string | null>(null)
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    return rows.filter((r) => {
+      if (statusFilter && r.status !== statusFilter) return false
+      if (!inRange(r.created_at, regFrom, regTo)) return false
+      if (!inRange(r.contract_date, payFrom, payTo)) return false
+      if (q) {
+        const hay = [
+          r.customer?.name ?? '',
+          r.product ?? '',
+          r.insurer ?? '',
+          r.policy_number ?? '',
+          r.notes ?? '',
+        ]
+          .join(' ')
+          .toLowerCase()
+        if (!hay.includes(q)) return false
+      }
+      return true
+    })
+  }, [rows, search, regFrom, regTo, payFrom, payTo, statusFilter])
+
+  const totalCommission = filtered.reduce((sum, r) => sum + (r.commission ?? 0), 0)
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const safePage = Math.min(page, pageCount)
+  const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+
+  const hasFilter =
+    !!search || !!regFrom || !!regTo || !!payFrom || !!payTo || !!statusFilter
+
+  function resetFilters() {
+    setSearch('')
+    setRegFrom('')
+    setRegTo('')
+    setPayFrom('')
+    setPayTo('')
+    setStatusFilter('')
+    setPage(1)
+  }
 
   async function reload() {
     const { data } = await supabase
@@ -182,18 +290,262 @@ export default function SalesClient({
     await reload()
   }
 
+  // 엑셀 다운로드 (현재 필터 결과)
+  function exportExcel() {
+    const data = filtered.map((r) => ({
+      고객명: r.customer?.name ?? '',
+      상품: r.product ?? '',
+      보험사: r.insurer ?? '',
+      증권번호: r.policy_number ?? '',
+      월납입료: r.premium ?? '',
+      총액: r.total_amount ?? '',
+      수수료: r.commission ?? '',
+      결제수단: r.payment_method
+        ? PAYMENT_METHOD_LABELS[r.payment_method]
+        : '',
+      청약일: r.contract_date ?? '',
+      '납입기간(개월)': r.term ?? '',
+      상태: r.status,
+      상태변경일: r.status_date ?? '',
+      메모: r.notes ?? '',
+    }))
+    const ws = XLSX.utils.json_to_sheet(data, { header: [...EXCEL_HEADERS] })
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, '학습자')
+    const today = filtered[0]?.created_at?.slice(0, 10) ?? '내역'
+    XLSX.writeFile(wb, `학습자_${today}.xlsx`)
+  }
+
+  // 일괄등록 템플릿 다운로드
+  function downloadTemplate() {
+    const ws = XLSX.utils.aoa_to_sheet([
+      [...EXCEL_HEADERS],
+      [
+        '홍길동',
+        '종신보험',
+        'OO생명',
+        'P-0001',
+        100000,
+        1200000,
+        50000,
+        '카드',
+        '2026-07-01',
+        120,
+        '정상',
+        '',
+        '메모 예시',
+      ],
+    ])
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, '템플릿')
+    XLSX.writeFile(wb, '학습자_일괄등록_템플릿.xlsx')
+  }
+
+  // 고객명 → customer_id (없으면 생성). batchMap으로 배치 내 중복 방지
+  async function ensureCustomer(
+    name: string,
+    batchMap: Map<string, string>,
+  ): Promise<string | null> {
+    const trimmed = name.trim()
+    if (!trimmed) return null
+    if (batchMap.has(trimmed)) return batchMap.get(trimmed)!
+    const { data, error } = await supabase
+      .from('customers')
+      .insert({ owner_id: userId, name: trimmed })
+      .select('id')
+      .single()
+    if (error) throw error
+    batchMap.set(trimmed, data.id)
+    return data.id
+  }
+
+  async function handleBulkFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    setBulkBusy(true)
+    setBulkMsg(null)
+    try {
+      const buf = await file.arrayBuffer()
+      const wb = XLSX.read(buf, { type: 'array' })
+      const ws = wb.Sheets[wb.SheetNames[0]]
+      const rowsJson = XLSX.utils.sheet_to_json<Record<string, unknown>>(ws, {
+        defval: '',
+      })
+      if (rowsJson.length === 0) {
+        setBulkMsg('데이터가 없습니다.')
+        return
+      }
+
+      const batchMap = new Map<string, string>(
+        customers.map((c) => [c.name, c.id]),
+      )
+      const payloads: Record<string, unknown>[] = []
+      let skipped = 0
+
+      for (const row of rowsJson) {
+        const name = String(row['고객명'] ?? '').trim()
+        const product = String(row['상품'] ?? '').trim()
+        if (!name && !product) {
+          skipped++
+          continue
+        }
+        const customer_id = name ? await ensureCustomer(name, batchMap) : null
+        const pmLabel = String(row['결제수단'] ?? '').trim()
+        const statusRaw = String(row['상태'] ?? '').trim() as SaleStatus
+        payloads.push({
+          owner_id: userId,
+          customer_id,
+          product: product || null,
+          insurer: String(row['보험사'] ?? '').trim() || null,
+          policy_number: String(row['증권번호'] ?? '').trim() || null,
+          premium: toNum(String(row['월납입료'] ?? '')),
+          total_amount: toNum(String(row['총액'] ?? '')),
+          commission: toNum(String(row['수수료'] ?? '')),
+          payment_method: PM_LABEL_TO_VALUE[pmLabel] ?? null,
+          contract_date: toDateStr(row['청약일']),
+          term: toInt(String(row['납입기간(개월)'] ?? '')),
+          status: SALE_STATUSES.includes(statusRaw) ? statusRaw : '정상',
+          status_date: toDateStr(row['상태변경일']),
+          notes: String(row['메모'] ?? '').trim() || null,
+        })
+      }
+
+      if (payloads.length === 0) {
+        setBulkMsg('등록할 유효한 행이 없습니다.')
+        return
+      }
+
+      const { error } = await supabase.from('sales').insert(payloads)
+      if (error) throw error
+      await reload()
+      setBulkMsg(
+        `${payloads.length}건 등록 완료${skipped ? ` · ${skipped}건 건너뜀` : ''}`,
+      )
+    } catch (err) {
+      setBulkMsg(
+        err instanceof Error ? err.message : '일괄등록에 실패했습니다.',
+      )
+    } finally {
+      setBulkBusy(false)
+    }
+  }
+
+  const colCount = readOnly ? 8 : 9
+
   return (
     <div className={styles.wrap}>
       <div className={styles.toolbar}>
         <h1 className={styles.heading}>
-          {heading}<span className={styles.count}>{rows.length}건</span>
-          <span className={styles.count}>· 수수료 합계 {won(totalCommission)}원</span>
+          {heading}
+          <span className={styles.count}>{filtered.length}건</span>
+          <span className={styles.count}>
+            · 수수료 합계 {won(totalCommission)}원
+          </span>
         </h1>
-        {!readOnly && (
-          <button className={styles.addBtn} type="button" onClick={openAdd}>
-            + 매출 추가
+        <div className={styles.toolActions}>
+          <button className={styles.ghostBtn} type="button" onClick={exportExcel}>
+            엑셀다운로드
           </button>
-        )}
+          {!readOnly && (
+            <>
+              <button
+                className={styles.ghostBtn}
+                type="button"
+                onClick={() => {
+                  setBulkMsg(null)
+                  setBulkOpen(true)
+                }}
+              >
+                일괄등록
+              </button>
+              <button className={styles.addBtn} type="button" onClick={openAdd}>
+                + 개별등록
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* 필터 바 */}
+      <div className={styles.filterBar}>
+        <input
+          className={styles.searchInput}
+          type="search"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            setPage(1)
+          }}
+          placeholder="고객·상품·보험사·증권번호·메모 검색"
+        />
+        <div className={styles.dateGroup}>
+          <span className={styles.rangeLabel}>등록기간</span>
+          <input
+            className={styles.dateInput}
+            type="date"
+            value={regFrom}
+            onChange={(e) => {
+              setRegFrom(e.target.value)
+              setPage(1)
+            }}
+          />
+          <span className={styles.tilde}>~</span>
+          <input
+            className={styles.dateInput}
+            type="date"
+            value={regTo}
+            onChange={(e) => {
+              setRegTo(e.target.value)
+              setPage(1)
+            }}
+          />
+        </div>
+        <div className={styles.dateGroup}>
+          <span className={styles.rangeLabel}>결제기간</span>
+          <input
+            className={styles.dateInput}
+            type="date"
+            value={payFrom}
+            onChange={(e) => {
+              setPayFrom(e.target.value)
+              setPage(1)
+            }}
+          />
+          <span className={styles.tilde}>~</span>
+          <input
+            className={styles.dateInput}
+            type="date"
+            value={payTo}
+            onChange={(e) => {
+              setPayTo(e.target.value)
+              setPage(1)
+            }}
+          />
+        </div>
+        <select
+          className={styles.filterSelect}
+          value={statusFilter}
+          onChange={(e) => {
+            setStatusFilter(e.target.value)
+            setPage(1)
+          }}
+        >
+          <option value="">상태 전체</option>
+          {SALE_STATUSES.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <button
+          className={styles.ghostBtn}
+          type="button"
+          onClick={resetFilters}
+          disabled={!hasFilter}
+        >
+          초기화
+        </button>
       </div>
 
       <div className={styles.tableWrap}>
@@ -212,16 +564,18 @@ export default function SalesClient({
             </tr>
           </thead>
           <tbody>
-            {rows.length === 0 ? (
+            {paged.length === 0 ? (
               <tr>
-                <td className={styles.empty} colSpan={readOnly ? 8 : 9}>
-                  {readOnly
-                    ? '아직 등록된 매출이 없습니다.'
-                    : '아직 등록된 매출이 없습니다. “매출 추가”로 시작하세요.'}
+                <td className={styles.empty} colSpan={colCount}>
+                  {rows.length === 0
+                    ? readOnly
+                      ? '아직 등록된 매출이 없습니다.'
+                      : '아직 등록된 매출이 없습니다. “개별등록”으로 시작하세요.'
+                    : '조건에 맞는 내역이 없습니다.'}
                 </td>
               </tr>
             ) : (
-              rows.map((s) => (
+              paged.map((s) => (
                 <tr className={styles.row} key={s.id}>
                   <td className={styles.td}>
                     {s.customer?.name ?? <span className={styles.muted}>-</span>}
@@ -262,6 +616,52 @@ export default function SalesClient({
         </table>
       </div>
 
+      {/* 페이지네이션 */}
+      {pageCount > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            type="button"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={safePage === 1}
+          >
+            이전
+          </button>
+          {Array.from({ length: pageCount }, (_, i) => i + 1)
+            .filter((n) => Math.abs(n - safePage) <= 2 || n === 1 || n === pageCount)
+            .reduce<number[]>((acc, n) => {
+              if (acc.length && n - acc[acc.length - 1] > 1) acc.push(-1)
+              acc.push(n)
+              return acc
+            }, [])
+            .map((n, i) =>
+              n === -1 ? (
+                <span key={`gap${i}`} className={styles.pageGap}>
+                  …
+                </span>
+              ) : (
+                <button
+                  key={n}
+                  type="button"
+                  className={n === safePage ? styles.pageBtnActive : styles.pageBtn}
+                  onClick={() => setPage(n)}
+                >
+                  {n}
+                </button>
+              ),
+            )}
+          <button
+            className={styles.pageBtn}
+            type="button"
+            onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+            disabled={safePage === pageCount}
+          >
+            다음
+          </button>
+        </div>
+      )}
+
+      {/* 개별등록/수정 모달 */}
       {!readOnly && open && (
         <div className={styles.overlay} onClick={() => setOpen(false)}>
           <form
@@ -269,7 +669,7 @@ export default function SalesClient({
             onClick={(e) => e.stopPropagation()}
             onSubmit={save}
           >
-            <h2 className={styles.modalTitle}>{editingId ? '매출 수정' : '매출 추가'}</h2>
+            <h2 className={styles.modalTitle}>{editingId ? '매출 수정' : '개별등록'}</h2>
             <div className={styles.formGrid}>
               <label className={styles.field}>
                 <span className={styles.label}>고객</span>
@@ -423,6 +823,49 @@ export default function SalesClient({
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {/* 일괄등록 모달 */}
+      {!readOnly && bulkOpen && (
+        <div className={styles.overlay} onClick={() => !bulkBusy && setBulkOpen(false)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <h2 className={styles.modalTitle}>일괄등록 (엑셀)</h2>
+            <p className={styles.bulkDesc}>
+              템플릿을 내려받아 작성한 뒤 업로드하세요. “고객명”은 없으면 자동으로
+              고객이 생성됩니다.
+            </p>
+            <div className={styles.bulkActions}>
+              <button
+                className={styles.ghostBtn}
+                type="button"
+                onClick={downloadTemplate}
+              >
+                템플릿 다운로드
+              </button>
+              <label className={styles.uploadBtn}>
+                {bulkBusy ? '업로드 중…' : '엑셀 파일 선택'}
+                <input
+                  type="file"
+                  accept=".xlsx,.xls"
+                  hidden
+                  disabled={bulkBusy}
+                  onChange={handleBulkFile}
+                />
+              </label>
+            </div>
+            {bulkMsg && <p className={styles.bulkMsg}>{bulkMsg}</p>}
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancelBtn}
+                type="button"
+                onClick={() => setBulkOpen(false)}
+                disabled={bulkBusy}
+              >
+                닫기
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

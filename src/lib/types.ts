@@ -9,10 +9,49 @@ export type Customer = {
   name: string
   phone: string | null
   birth: string | null
-  source: string | null
+  source: string | null // 유입경로
+  institution: string | null // 기관
+  education_level: string | null // 교육수준
+  course_type: string | null // 과정유형
+  course: string | null // 과정
   notes: string | null
   created_at: string
 }
+
+// 가망관리(prospect-register) 선택 옵션
+export const INSTITUTION_OPTIONS = [
+  '한평생학점은행',
+  '한국평생교육진흥원',
+  '제휴시설',
+  '기타',
+] as const
+
+export const EDUCATION_LEVEL_OPTIONS = [
+  '고등학교 졸업',
+  '대학교 졸업',
+  '대학원 졸업',
+  '기타',
+] as const
+
+export const COURSE_TYPE_OPTIONS = [
+  '학점은행제',
+  '평생교육사',
+  '한국어교원',
+  '사회복지학사',
+  '아동학사',
+  '유학',
+  '어학연수',
+  '기타',
+] as const
+
+export const INFLOW_SOURCE_OPTIONS = [
+  '블로그',
+  '맘카페',
+  '당근마켓',
+  '영업',
+  '고객지원',
+  '기타',
+] as const
 
 export type Sale = {
   id: string

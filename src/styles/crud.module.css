@@ -52,6 +52,188 @@
   background: #4338ca;
 }
 
+/* 툴바 액션 */
+.toolActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ghostBtn {
+  height: 40px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.ghostBtn:hover {
+  background: #f3f4f6;
+}
+
+.ghostBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 필터 바 */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.searchInput {
+  flex: 1 1 240px;
+  min-width: 200px;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+}
+
+.searchInput:focus,
+.dateInput:focus,
+.filterSelect:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.dateGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rangeLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.dateInput {
+  height: 40px;
+  padding: 0 8px;
+  font-size: 13px;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+}
+
+.tilde {
+  color: #9ca3af;
+}
+
+.filterSelect {
+  height: 40px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.pageBtn,
+.pageBtnActive {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtnActive {
+  color: #fff;
+  background: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.pageGap {
+  color: #9ca3af;
+  padding: 0 2px;
+}
+
+/* 일괄등록 모달 */
+.bulkDesc {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.bulkActions {
+  display: flex;
+  gap: 10px;
+}
+
+.uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: #4f46e5;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.uploadBtn:hover {
+  background: #4338ca;
+}
+
+.bulkMsg {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #1e40af;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
 .tableWrap {
   overflow-x: auto;
   background: #fff;

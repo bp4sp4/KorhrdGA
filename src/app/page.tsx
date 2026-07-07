@@ -22,8 +22,8 @@ export default async function HomePage() {
   const isAdmin = profile?.role === 'admin'
   const displayName = profile?.name ?? user.email ?? ''
 
-  // 홈은 관리자 전용 — 담당자는 고객 DB로 바로 이동
-  if (!isAdmin) redirect('/customers')
+  // 홈은 관리자 전용 — 담당자는 학습자 신규로 바로 이동
+  if (!isAdmin) redirect('/students')
 
   return (
     <div className={styles.page}>
