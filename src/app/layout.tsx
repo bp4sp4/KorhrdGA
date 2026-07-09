@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description: "1인 GA 담당자용 고객·매출 관리 CRM",
 };
 
+// Supabase(서울, ap-northeast-2)와 같은 리전에서 서버 함수 실행 → 인증/DB 왕복 지연 최소화
+export const preferredRegion = "icn1";
+
 export default function RootLayout({
   children,
 }: Readonly<{

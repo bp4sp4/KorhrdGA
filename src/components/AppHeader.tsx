@@ -29,7 +29,11 @@ export default function AppHeader({
   }
 
   const nav = isAdmin
-    ? [{ href: '/', label: '홈' }, ...NAV, { href: '/admin', label: '관리자' }]
+    ? [
+        { href: '/', label: '홈' },
+        ...NAV,
+        { href: '/admin', label: '관리자' },
+      ]
     : NAV
 
   return (

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import AppHeader from '@/components/AppHeader'
-import type { Sale } from '@/lib/types'
+import type { Sale, SalesViewConfig } from '@/lib/types'
 import SalesClient from './SalesClient'
 import styles from '@/styles/crud.module.css'
 
@@ -34,6 +34,12 @@ export default async function StudentsPage() {
     .eq('owner_id', user.id)
     .order('name')
 
+  const { data: pref } = await supabase
+    .from('user_prefs')
+    .select('sales_view')
+    .eq('user_id', user.id)
+    .maybeSingle()
+
   return (
     <div className={styles.page}>
       <AppHeader displayName={displayName} isAdmin={isAdmin} />
@@ -41,7 +47,9 @@ export default async function StudentsPage() {
         initial={(sales as Sale[]) ?? []}
         customers={customers ?? []}
         userId={user.id}
-        heading="학습자 신규"
+        heading="매출등록"
+        managerName={displayName}
+        viewConfig={(pref?.sales_view as SalesViewConfig) ?? {}}
       />
     </div>
   )
