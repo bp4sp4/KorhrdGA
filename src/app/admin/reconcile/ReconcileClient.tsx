@@ -77,6 +77,7 @@ function monthRegex(ym: string) {
 
 export default function ReconcileClient({ dbRows, agents = [], currentYm }: { dbRows: DbRow[]; agents?: string[]; currentYm: string }) {
   const [ym, setYm] = useState(currentYm)
+  const [combine, setCombine] = useState(true) // 학생아이디별 합산
   const [fileName, setFileName] = useState<string | null>(null)
   const [sheets, setSheets] = useState<SheetInfo[]>([])
   const [selected, setSelected] = useState<Set<string>>(new Set())
@@ -177,7 +178,51 @@ export default function ReconcileClient({ dbRows, agents = [], currentYm }: { db
     // 선택 년월(결제일자 기준)의 DB만 대사
     const monthDbRows = dbRows.filter((d) => (d.payment_date ?? '').slice(0, 7) === ym)
 
-    // DB 멀티셋: 학생아이디 -> DbRow[] (계정과 무관하게 학생아이디로 대사)
+    // ── 학생별 합산 모드: 학생아이디별로 결제금액을 합쳐 한 줄로 대사 ──
+    if (combine) {
+      type Ex = { name: string; manager: string; amount: number; count: number; sheets: Set<string> }
+      const ex = new Map<string, Ex>()
+      for (const r of excelRows) {
+        let o = ex.get(r.student_id)
+        if (!o) { o = { name: r.name, manager: r.manager, amount: 0, count: 0, sheets: new Set() }; ex.set(r.student_id, o) }
+        o.amount += r.excelAmount ?? 0
+        o.count++
+        o.sheets.add(r.sheet)
+        if (!o.name && r.name) o.name = r.name
+        if (!o.manager && r.manager) o.manager = r.manager
+      }
+      type Db = { amount: number; owner: string | null; name: string | null; institution: string | null }
+      const db = new Map<string, Db>()
+      for (const d of monthDbRows) {
+        const id = (d.student_id ?? '').trim()
+        if (!id) continue
+        let o = db.get(id)
+        if (!o) { o = { amount: 0, owner: null, name: null, institution: null }; db.set(id, o) }
+        o.amount += d.payment_amount ?? 0
+        if (!o.owner && d.owner?.name) o.owner = d.owner.name
+        if (!o.name && d.customer_name) o.name = d.customer_name
+        if (!o.institution && d.institution) o.institution = d.institution
+      }
+      const out: ResultRow[] = []
+      for (const [id, e] of ex) {
+        const label = e.count > 1 ? `${e.count}건 합산` : (Array.from(e.sheets)[0] ?? '')
+        const d = db.get(id)
+        if (!d) {
+          out.push({ sheet: label, manager: e.manager, student_id: id, name: e.name, excelAmount: e.amount, dbAmount: null, status: 'missing', owner: null })
+          continue
+        }
+        const status: Status = Number(d.amount) === Number(e.amount) ? 'matched' : 'mismatch'
+        out.push({ sheet: label, manager: e.manager, student_id: id, name: e.name || (d.name ?? ''), excelAmount: e.amount, dbAmount: d.amount, status, owner: d.owner ?? '(소유자 없음)' })
+      }
+      const leftover: DbRow[] = []
+      for (const [id, d] of db) {
+        if (ex.has(id)) continue
+        leftover.push({ manager: null, student_id: id, payment_amount: d.amount, payment_date: null, customer_name: d.name, institution: d.institution, owner: d.owner ? { name: d.owner } : null })
+      }
+      return { results: out, dbOnly: leftover }
+    }
+
+    // ── 개별 행 모드: 행마다 대사 (멀티셋) ──
     const map = new Map<string, DbRow[]>()
     for (const d of monthDbRows) {
       const key = (d.student_id ?? '').trim()
@@ -204,7 +249,7 @@ export default function ReconcileClient({ dbRows, agents = [], currentYm }: { db
     const leftover: DbRow[] = []
     for (const arr of map.values()) leftover.push(...arr)
     return { results: excelRows, dbOnly: leftover }
-  }, [sheets, selected, dbRows, ym])
+  }, [sheets, selected, dbRows, ym, combine])
 
   const summary = useMemo(() => {
     const s = { total: results.length, matched: 0, mismatch: 0, missing: 0 }
@@ -315,6 +360,18 @@ export default function ReconcileClient({ dbRows, agents = [], currentYm }: { db
             <button className={styles.ghostBtn} type="button" onClick={() => changeYm(currentYm)}>현재월로</button>
           )}
           <span style={{ fontSize: 12.5, color: '#9ca3af' }}>해당 월 결제 건만 대사합니다</span>
+
+          <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginLeft: 'auto', cursor: 'pointer', fontSize: 13, fontWeight: 600, color: '#3a4257' }}>
+            <button
+              type="button"
+              onClick={() => setCombine((v) => !v)}
+              aria-pressed={combine}
+              style={{ width: 40, height: 23, borderRadius: 999, border: 'none', background: combine ? '#2563eb' : '#d1d5db', position: 'relative', cursor: 'pointer', flexShrink: 0, transition: 'background .15s' }}
+            >
+              <span style={{ position: 'absolute', top: 2, left: combine ? 19 : 2, width: 19, height: 19, borderRadius: '50%', background: '#fff', transition: 'left .15s' }} />
+            </button>
+            학생별 합산 <span style={{ fontWeight: 400, color: '#9ca3af' }}>(같은 아이디 금액 합치기)</span>
+          </label>
         </div>
 
         {parseError && (

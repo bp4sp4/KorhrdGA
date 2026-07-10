@@ -1,0 +1,425 @@
+/* ==========================================================================
+   DateRangeCalendar — 프리셋 + 2개월 범위 달력
+   ========================================================================== */
+
+.root {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  user-select: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  width: fit-content;
+}
+
+/* ---------------------------------------------------------------------------
+   프리셋 버튼
+   --------------------------------------------------------------------------- */
+
+.presetRow {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.presetBtn {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.presetBtn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.presetBtnActive {
+  background: #3182f6;
+  border-color: #3182f6;
+  color: #fff;
+}
+
+.presetBtnActive:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+/* ---------------------------------------------------------------------------
+   달력 영역
+   --------------------------------------------------------------------------- */
+
+.calendarWrap {
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 0;
+  margin: 4px 0 10px;
+}
+
+.dp_root {
+  font-family: inherit;
+  font-size: 13px;
+  position: relative;
+}
+
+.dp_months {
+  display: flex;
+  gap: 24px;
+}
+
+.dp_month {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 232px;
+}
+
+/* 헤더 */
+.dp_caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.dp_caption_label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  pointer-events: none;
+}
+
+/* 네비게이션 */
+.dp_nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.dp_nav_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  border-radius: 6px;
+  pointer-events: auto;
+  padding: 0;
+  position: relative;
+  z-index: 3;
+}
+
+.dp_nav_btn svg {
+  pointer-events: none;
+}
+
+.dp_nav_btn:hover {
+  background: #f3f4f6;
+  color: #111;
+}
+
+.dp_nav_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.dp_chevron {
+}
+
+/* 그리드 */
+.dp_grid {
+  border-collapse: separate;
+  border-spacing: 0 3px; /* 가로 0, 세로 3px — 주(week) 행 사이에만 살짝 여백 */
+  width: 100%;
+}
+
+.dp_grid tr,
+.dp_grid th,
+.dp_grid td {
+  border: none;
+  padding: 0;
+}
+
+.dp_weekdays {
+  border: none;
+}
+
+.dp_weekday {
+  width: 32px;
+  height: 22px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+/* 일(일요일) / 토(토요일) */
+.dp_weekday:first-child {
+  color: #e03535;
+}
+.dp_weekday:last-child {
+  color: #3182f6;
+}
+
+/* 날짜 셀 */
+.dp_week {
+  border: none;
+}
+
+.dp_day {
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  height: 30px;
+  line-height: 0;
+}
+
+.dp_day_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #222;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.dp_day_button:hover {
+  background: #f3f4f6;
+}
+
+/* 포커스 링 제거 — 마우스 클릭 후 남는 잔상 방지 */
+.dp_day_button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* 키보드 접근성: 탭으로 이동할 때만 링 표시 */
+.dp_day_button:focus-visible {
+  outline: 2px solid #3182f6;
+  outline-offset: -2px;
+}
+
+/* 일요일 / 토요일 색 */
+.dp_day:first-child .dp_day_button {
+  color: #e03535;
+}
+.dp_day:last-child .dp_day_button {
+  color: #3182f6;
+}
+
+/* 오늘 */
+.dp_today .dp_day_button {
+  font-weight: 700;
+}
+
+/* 이번달 외 */
+.dp_outside .dp_day_button {
+  color: #d1d5db;
+}
+.dp_outside:first-child .dp_day_button {
+  color: #f0bcbc;
+}
+.dp_outside:last-child .dp_day_button {
+  color: #bcd1f5;
+}
+
+/* 비활성화 / 숨김 */
+.dp_disabled .dp_day_button {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.dp_disabled .dp_day_button:hover {
+  background: none;
+}
+.dp_hidden {
+  visibility: hidden;
+}
+
+/* 단일 선택 */
+.dp_selected .dp_day_button {
+  background: #3182f6;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+/* 범위: 시작 / 끝 */
+.dp_range_start .dp_day_button,
+.dp_range_end .dp_day_button {
+  background: #3182f6;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+/* 범위: 중간 — 셀 배경을 연속으로 채우고 day_button은 투명 */
+.dp_range_middle {
+  background: #e8f0fe;
+}
+
+.dp_range_middle .dp_day_button {
+  background: transparent;
+  color: #3182f6 !important;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.dp_range_middle .dp_day_button:hover {
+  background: rgba(49, 130, 246, 0.18);
+}
+
+/* 주(week) 첫 칸(일)/끝 칸(토)에서는 범위 바 바깥쪽을 pill(50%) 처리 */
+.dp_range_middle:first-child {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.dp_range_middle:last-child {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+/* 범위 안의 "이번달 외" 날짜도 또렷하게 */
+.dp_range_middle.dp_outside .dp_day_button {
+  color: #3182f6 !important;
+  opacity: 1;
+}
+
+/* range_start/end는 파란 배경이라 흰 글자로 강제 */
+.dp_range_start.dp_outside .dp_day_button,
+.dp_range_end.dp_outside .dp_day_button,
+.dp_outside.dp_range_start:first-child .dp_day_button,
+.dp_outside.dp_range_start:last-child .dp_day_button,
+.dp_outside.dp_range_end:first-child .dp_day_button,
+.dp_outside.dp_range_end:last-child .dp_day_button {
+  color: #ffffff !important;
+  opacity: 1;
+  background: #3182f6 !important;
+}
+
+/* 범위 내 일/토요일 색도 파란색 계열로 통일 (가독성) */
+.dp_range_middle:first-child .dp_day_button,
+.dp_range_middle:last-child .dp_day_button {
+  color: #3182f6 !important;
+}
+
+/* 범위 시작/끝 셀의 옆 이어짐 — 둥근 pill과 맞물리도록
+   pill(28px) 반지름만큼만 투명 → 색칠 영역 사이 간격을 최소화 */
+.dp_range_start {
+  background: linear-gradient(
+    to right,
+    transparent calc(50% - 1px),
+    #e8f0fe calc(50% - 1px)
+  );
+}
+.dp_range_end {
+  background: linear-gradient(
+    to left,
+    transparent calc(50% - 1px),
+    #e8f0fe calc(50% - 1px)
+  );
+}
+/* from === to 일 때는 배경 제거 */
+.dp_range_start.dp_range_end {
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   푸터
+   --------------------------------------------------------------------------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.summary {
+  font-size: 12px;
+  color: #374151;
+}
+
+.summary strong {
+  color: #111;
+  font-weight: 700;
+  margin: 0 2px;
+}
+
+.summaryHint {
+  margin-left: 6px;
+  color: #9ca3af;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btnGhost,
+.btnPrimary {
+  height: 28px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.btnGhost {
+  background: #fff;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.btnGhost:hover {
+  background: #f3f4f6;
+}
+
+.btnPrimary {
+  background: #3182f6;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: #2563eb;
+}

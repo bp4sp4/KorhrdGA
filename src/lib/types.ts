@@ -3,6 +3,10 @@ export type Role = 'agent' | 'admin'
 export type PaymentMethod = 'payapp_transfer' | 'bank_transfer' | 'card'
 export type SaleStatus = '정상' | '철회' | '실효' | '정산' | '보류'
 
+// 매출파일(한평생 오피스 학점은행제 양식) 환불상태
+export type RefundStatus = '정상' | '당월 환불' | '환불' | '정산' | '보류'
+export const REFUND_STATUSES: RefundStatus[] = ['정상', '당월 환불', '환불', '정산', '보류']
+
 export type Customer = {
   id: string
   owner_id: string
@@ -88,6 +92,13 @@ export type Sale = {
   payment_amount: number | null // 결제금액
   subject_count: number | null // 과목수
   special_note: string | null // 특이사항
+  // 매출파일(한평생 오피스 학점은행제 edu-sales 양식) 필드
+  unit_price: number | null // 단가
+  process_number: string | null // (현)처리번호
+  issue_date: string | null // (현)발급일자
+  is_published: boolean // 발행완료
+  refund_status: RefundStatus // 환불상태
+  refund_date: string | null // 환불일
   custom: Record<string, string> | null // 커스텀 항목 값 (JSONB)
   // 조인된 고객명 (select '*, customer:customers(name)')
   customer?: { name: string } | null
@@ -130,4 +141,36 @@ export const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
   card: '카드',
 }
 
+// 매출파일 결제방법 셀렉트 옵션 (한평생 오피스 양식)
+export const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] = [
+  { value: 'card', label: '카드결제' },
+  { value: 'payapp_transfer', label: '페이앱 계좌이체' },
+  { value: 'bank_transfer', label: '계좌이체' },
+]
+
 export const SALE_STATUSES: SaleStatus[] = ['정상', '철회', '실효', '정산', '보류']
+
+// 매출파일 컬럼 양식 (한평생 오피스 학점은행제 사업부 → 매출파일과 동일 순서)
+// key = Sale 필드, label = 헤더, adminOnly = 마스터관리자 전용 컬럼
+export const SALES_FILE_COLUMNS: {
+  key: keyof Sale
+  label: string
+  adminOnly?: boolean
+}[] = [
+  { key: 'institution', label: '교육원' },
+  { key: 'class_start', label: '개강반' },
+  { key: 'customer_name', label: '학생명' },
+  { key: 'student_id', label: '아이디' },
+  { key: 'phone', label: '전화번호' },
+  { key: 'unit_price', label: '단가' },
+  { key: 'payment_amount', label: '매출' },
+  { key: 'payment_method', label: '결제방법' },
+  { key: 'payment_date', label: '결제일' },
+  { key: 'subject_count', label: '과목수' },
+  { key: 'manager', label: '담당자' },
+  { key: 'special_note', label: '특이사항' },
+  { key: 'process_number', label: '(현)처리번호' },
+  { key: 'issue_date', label: '(현)발급일자', adminOnly: true },
+  { key: 'is_published', label: '발행완료', adminOnly: true },
+  { key: 'refund_status', label: '환불', adminOnly: true },
+]

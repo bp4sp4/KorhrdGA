@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-07-10T01:55:35.042Z",
+  "lastUpdated": "2026-07-10T09:38:22.575Z",
   "activeFeatures": [
     "ga-crm",
     "login",
@@ -21,9 +21,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-06T09:21:38.444Z",
-        "lastUpdated": "2026-07-09T09:32:25.499Z"
+        "lastUpdated": "2026-07-10T09:27:06.723Z"
       },
-      "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/components/AppHeader.tsx"
+      "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/lib/types.ts"
     },
     "login": {
       "phase": "do",
@@ -47,7 +47,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-06T09:27:08.116Z",
-        "lastUpdated": "2026-07-09T08:54:29.465Z"
+        "lastUpdated": "2026-07-10T09:38:22.575Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/students/SalesClient.tsx"
     },
@@ -60,9 +60,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-06T09:36:43.763Z",
-        "lastUpdated": "2026-07-09T08:46:40.472Z"
+        "lastUpdated": "2026-07-10T09:29:14.414Z"
       },
-      "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/sales/page.tsx"
+      "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/sales/SalesFileClient.tsx"
     },
     "customers": {
       "phase": "do",
@@ -73,7 +73,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-07T01:47:31.949Z",
-        "lastUpdated": "2026-07-09T08:29:41.426Z"
+        "lastUpdated": "2026-07-10T08:02:32.441Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/customers/CustomersClient.tsx"
     },
@@ -99,7 +99,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-08T03:21:08.811Z",
-        "lastUpdated": "2026-07-10T01:55:35.042Z"
+        "lastUpdated": "2026-07-10T07:05:34.370Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/admin/reconcile/ReconcileClient.tsx"
     }
@@ -112,7 +112,7 @@
   "session": {
     "startedAt": "2026-07-06T09:19:37.494Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-07-10T01:55:35.042Z"
+    "lastActivity": "2026-07-10T09:38:22.575Z"
   },
   "history": [
     {
@@ -1036,6 +1036,402 @@
     {
       "timestamp": "2026-07-10T01:55:35.042Z",
       "feature": "reconcile",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:04:53.563Z",
+      "feature": "reconcile",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:05:16.596Z",
+      "feature": "reconcile",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:05:34.370Z",
+      "feature": "reconcile",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:47:49.878Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:47:57.011Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:48:14.728Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:48:27.485Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:49:42.329Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:51:41.243Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:51:48.881Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:51:55.688Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:52:05.773Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:56:34.327Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:56:41.515Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:57:11.634Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:57:37.475Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T07:58:05.581Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:02:32.441Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:04:03.960Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:04:12.066Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:04:21.593Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:04:32.333Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:07:19.393Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:07:32.887Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:10:26.993Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:10:39.680Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:13:12.879Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:13:25.927Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:13:38.568Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:20:06.414Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:47:27.887Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:47:33.522Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:47:50.762Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:55:27.996Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T08:55:35.336Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:01:56.391Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:02:03.489Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:02:09.124Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:05:43.677Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:23:55.160Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:24:01.383Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:24:07.309Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:24:12.646Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:24:31.869Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:24:36.988Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:26:34.541Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:26:38.789Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:26:48.371Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:26:52.398Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:26:59.664Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:27:06.723Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:29:00.306Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:29:05.183Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:29:08.969Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:29:14.414Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:33:38.162Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:33:48.040Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:34:01.021Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:34:23.396Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:34:38.281Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:36:21.692Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:36:26.187Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:36:37.045Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:36:43.739Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:36:51.266Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T09:38:22.575Z",
+      "feature": "students",
       "phase": "do",
       "action": "updated"
     }

@@ -1,0 +1,233 @@
+/* ==========================================================================
+   DateInput — 날짜 선택 트리거 + 팝오버
+   ========================================================================== */
+
+.wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* ---------------------------------------------------------------------------
+   트리거 버튼
+   --------------------------------------------------------------------------- */
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fafafa;
+  font-size: 13px;
+  color: #222;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  min-width: 112px;
+}
+
+.trigger:hover {
+  border-color: #bbb;
+  background: #fff;
+}
+
+.trigger:focus-visible,
+.trigger_open {
+  border-color: #3182f6;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.12);
+}
+
+.trigger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+.trigger_placeholder span {
+  color: #aaa;
+}
+
+.icon {
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+.trigger:hover .icon {
+  color: #888;
+}
+
+/* ---------------------------------------------------------------------------
+   버튼 variant 스타일
+   --------------------------------------------------------------------------- */
+
+.scheduleBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border: 1px solid #3182f6;
+  border-radius: 4px;
+  background: #fff;
+  color: #3182f6;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 100ms ease, color 100ms ease;
+}
+
+.scheduleBtn:hover {
+  background: #3182f6;
+  color: #fff;
+}
+
+/* 날짜 + X 묶음 */
+.scheduleBtnWithX {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #e03535;
+  border-radius: 4px;
+  background: #fff5f5;
+  overflow: hidden;
+}
+
+.scheduleBtnDate {
+  background: none;
+  border: none;
+  padding: 0 6px;
+  height: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #e03535;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.scheduleBtnDate:hover {
+  background: #ffe0e0;
+}
+
+.scheduleBtnX {
+  background: none;
+  border: none;
+  border-left: 1px solid #f5b8b8;
+  padding: 0 5px;
+  height: 20px;
+  font-size: 12px;
+  color: #e03535;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.scheduleBtnX:hover {
+  background: #ffd0d0;
+}
+
+.scheduleBtn_active {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border: 1px solid #e03535;
+  border-radius: 4px;
+  background: #fff5f5;
+  color: #e03535;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 100ms ease;
+}
+
+.scheduleBtn_active:hover {
+  background: #ffe0e0;
+}
+
+/* ---------------------------------------------------------------------------
+   팝오버 달력
+   --------------------------------------------------------------------------- */
+
+.popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 120ms ease;
+}
+
+.popoverFixed {
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 120ms ease;
+}
+
+/* 부모 테이블 스타일이 캘린더 내부 셀까지 침투하지 않도록 초기화 */
+.popover td,
+.popover th,
+.popover tr,
+.popoverFixed td,
+.popoverFixed th,
+.popoverFixed tr {
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.popover_right {
+  left: auto;
+  right: 0;
+}
+
+.popover_up {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 팝오버 하단 — 초기화(선택값 비우기) */
+.popoverFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 12px 10px;
+}
+
+.clearBtn {
+  border: 1px solid #e5e8eb;
+  background: #fff;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4e5968;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.clearBtn:hover {
+  background: #f2f4f6;
+}
+
+.clearBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

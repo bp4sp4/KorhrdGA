@@ -1,0 +1,174 @@
+/* 매출파일 — 한평생 오피스 학점은행제 edu-sales 양식 (인라인 편집 표) */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 1400px;
+}
+
+.thead {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e8eb;
+}
+
+.th {
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.tr {
+  border-bottom: 1px solid #f0f1f3;
+  transition: background 0.1s;
+}
+
+.tr:hover {
+  background: #fafbfc;
+}
+
+.td {
+  padding: 10px 12px;
+  color: #191f28;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.tdStrong {
+  font-weight: 600;
+}
+
+.tdDim {
+  color: #c4c9d0;
+}
+
+/* ── 인라인 편집 입력 ───────────────────────────────── */
+.inlineInput {
+  width: 100%;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  font-size: 13px;
+  color: #191f28;
+  outline: none;
+  text-align: center;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.inlineInput:hover {
+  background: #f9fafb;
+  border-color: #e5e8eb;
+}
+
+.inlineInput:focus {
+  background: #fff;
+  border-color: #3182f6;
+}
+
+.inlineInput:disabled {
+  cursor: default;
+  color: #191f28;
+}
+
+.inlineSelect {
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  font-size: 13px;
+  color: #191f28;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.inlineSelect:hover {
+  background: #f9fafb;
+  border-color: #e5e8eb;
+}
+
+.inlineSelect:focus {
+  background: #fff;
+  border-color: #3182f6;
+}
+
+.inlineCheck {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* 커스텀 달력 트리거 (DateInput) — 인라인 셀 크기 */
+.inlineDateTrigger {
+  height: 28px !important;
+  padding: 0 6px !important;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  font-size: 12px !important;
+  color: #191f28 !important;
+  min-width: 108px;
+  cursor: pointer;
+  text-align: center !important;
+  justify-content: center !important;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.inlineDateTrigger:hover {
+  background: #f9fafb !important;
+  border-color: #e5e8eb !important;
+}
+
+.inlineDateTrigger:focus,
+.inlineDateTrigger:focus-visible {
+  background: #fff !important;
+  border-color: #3182f6 !important;
+  outline: none !important;
+}
+
+/* 미입력 셀 강조 */
+.cellEmpty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+
+/* ── 환불 시각 효과 ─────────────────────────────────── */
+.tdStrike {
+  text-decoration: line-through;
+  text-decoration-color: #ec4899;
+  text-decoration-thickness: 2px;
+  color: #be185d !important;
+}
+
+.refundCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── 관리(삭제) ─────────────────────────────────────── */
+.delBtn {
+  padding: 5px 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delBtn:hover {
+  background: #fee2e2;
+}

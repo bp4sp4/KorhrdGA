@@ -26,7 +26,7 @@ export default async function StudentsPage() {
     .from('sales')
     .select('*, customer:customers(name)')
     .eq('owner_id', user.id)
-    .order('contract_date', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false })
 
   const { data: customers } = await supabase
     .from('customers')

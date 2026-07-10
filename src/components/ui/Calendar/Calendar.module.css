@@ -1,0 +1,332 @@
+/* ==========================================================================
+   Calendar 컴포넌트 — 클린 미니멀 디자인
+   ========================================================================== */
+
+.root {
+  display: inline-block;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 12px 14px;
+  user-select: none;
+  font-family: inherit;
+  font-size: 13px;
+  position: relative;
+  width: fit-content;
+}
+
+/* ---------------------------------------------------------------------------
+   월 레이아웃
+   --------------------------------------------------------------------------- */
+
+.months {
+  display: flex;
+  gap: 0;
+}
+
+.month {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+   헤더: 드롭다운 (좌) + 네비 버튼 (우, absolute)
+   --------------------------------------------------------------------------- */
+
+.month_caption {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding-right: 60px; /* 네비 버튼 공간 */
+  margin-bottom: 4px;
+}
+
+.caption_label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ---------------------------------------------------------------------------
+   드롭다운 (연도 / 월 select)
+   --------------------------------------------------------------------------- */
+
+.dropdowns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown_root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 실제 select — 투명 오버레이로 올려서 클릭/키보드만 담당 */
+.dropdown {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* caption_label — 드롭다운 안에서 실제로 보이는 텍스트+화살표 */
+.caption_label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.dropdown_root:hover .caption_label {
+  color: #3182f6;
+}
+
+/* 드롭다운 내부 chevron (down 방향) */
+.dropdown_chevron {
+  color: #888;
+  flex-shrink: 0;
+}
+
+/* nav 버튼용 chevron */
+.chevron {
+}
+
+/* ---------------------------------------------------------------------------
+   네비게이션 버튼 (absolute — root 기준 우상단)
+   --------------------------------------------------------------------------- */
+
+.nav {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 7px;
+  color: #bbb;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    color 120ms ease,
+    background 120ms ease;
+}
+
+.nav_btn:hover {
+  color: #444;
+  background: #f0f0f0;
+}
+
+.nav_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   그리드 / 요일 헤더
+   --------------------------------------------------------------------------- */
+
+.month_grid {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+/* 브라우저 기본 table border 완전 제거 */
+.month_grid tr,
+.month_grid th,
+.month_grid td {
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.weekdays {
+  border: none;
+}
+
+.weekday {
+  width: 32px;
+  height: 24px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #c0c0c0;
+  letter-spacing: 0.02em;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+/* 일요일 */
+.weekday:first-child {
+  color: #e03535;
+}
+
+/* 토요일 */
+.weekday:last-child {
+  color: #3182f6;
+}
+
+/* ---------------------------------------------------------------------------
+   날짜 셀
+   --------------------------------------------------------------------------- */
+
+.week {
+  border: none;
+  outline: none;
+}
+
+.day {
+  padding: 0;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+.day_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #222;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 0;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.day_button:hover {
+  background: #f0f0f0;
+}
+
+/* 일요일 날짜 */
+.day:first-child .day_button {
+  color: #e03535;
+}
+
+/* 토요일 날짜 */
+.day:last-child .day_button {
+  color: #3182f6;
+}
+
+/* ---------------------------------------------------------------------------
+   상태별 스타일
+   --------------------------------------------------------------------------- */
+
+/* 오늘 */
+.day_today .day_button {
+  background: #111 !important;
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.day_today .day_button:hover {
+  background: #333 !important;
+}
+
+/* 선택됨 (오늘이어도 selected 우선) */
+.day_selected .day_button {
+  background: #d9d9d9 !important;
+  color: #111 !important;
+  font-weight: 600;
+  box-shadow: none !important;
+}
+
+.day_selected .day_button:hover {
+  background: #c8c8c8 !important;
+}
+
+/* 이번달 외 날짜 */
+.day_outside .day_button {
+  color: #ddd;
+}
+.day_outside:first-child .day_button {
+  color: #e8b4b4;
+}
+.day_outside:last-child .day_button {
+  color: #b4ccf5;
+}
+
+/* 비활성화 */
+.day_disabled .day_button {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.day_disabled .day_button:hover {
+  background: none;
+}
+
+/* 숨김 */
+.day_hidden {
+  visibility: hidden;
+}
+
+/* 포커스 */
+.day_focused .day_button {
+  outline: 2px solid #3182f6;
+  outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   범위 선택 (range mode)
+   --------------------------------------------------------------------------- */
+
+.day_range_start .day_button,
+.day_range_end .day_button {
+  background: #3182f6;
+  color: #fff !important;
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+.day_range_middle {
+  background: #e8f0fe;
+}
+
+.day_range_middle .day_button {
+  background: transparent;
+  color: #3182f6;
+  border-radius: 0;
+}
+
+.day_range_middle .day_button:hover {
+  background: rgba(49, 130, 246, 0.15);
+}

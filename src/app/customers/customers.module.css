@@ -1,0 +1,510 @@
+.page {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    sans-serif;
+  color: #1c2333;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 28px;
+  padding: 28px 32px 48px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* ── 등록/수정 폼 카드 ── */
+.formCard {
+  position: sticky;
+  top: 24px;
+  background: #fff;
+  border: 1px solid #e2e6ee;
+  border-radius: 16px;
+
+  overflow: hidden;
+}
+
+.formHeader {
+  padding: 24px 26px 20px;
+  border-bottom: 1px solid #e2e6ee;
+}
+
+.formTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.formSub {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #8a93a6;
+}
+
+.formBody {
+  padding: 22px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #3a4257;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  font-size: 14.5px;
+  font-family: inherit;
+  color: #1c2333;
+  background: #fff;
+  border: 1px solid #e2e6ee;
+  border-radius: 10px;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.input {
+  padding: 12px 14px;
+}
+
+.textarea {
+  padding: 12px 14px;
+  resize: none;
+  line-height: 1.5;
+}
+
+.select {
+  appearance: none;
+  padding: 12px 40px 12px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.caret {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: #9aa3b2;
+  pointer-events: none;
+}
+
+.divider {
+  height: 1px;
+  background: #eef1f6;
+  margin: 2px 0;
+}
+
+.error {
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.submitBtn {
+  margin-top: 4px;
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.editActions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancelBtn,
+.deleteBtn {
+  flex: 1;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  background: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  color: #3a4257;
+  border: 1.5px solid #e3e8f0;
+}
+
+.deleteBtn {
+  color: #dc2626;
+  font-weight: 700;
+  border: 1.5px solid #fecaca;
+}
+
+/* ── 리스트 ── */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.listHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #8a93a6;
+}
+
+.headActions {
+  display: flex;
+  gap: 10px;
+}
+
+.ghostBtn {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #3a4257;
+  background: #fff;
+  border: 1.5px solid #e3e8f0;
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.ghostBtn:hover {
+  background: #f7f9fc;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.searchWrap {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9aa3b2;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 14px 16px 14px 46px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1c2333;
+  background: #fff;
+  border: 1.5px solid #e3e8f0;
+  border-radius: 14px;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(20, 27, 46, 0.04);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.searchInput:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterLabel {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #7a8397;
+}
+
+.filterSelect {
+  appearance: none;
+  padding: 11px 34px 11px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  color: #1c2333;
+  background: #fff;
+  border: 1.5px solid #e3e8f0;
+  border-radius: 11px;
+  cursor: pointer;
+  outline: none;
+}
+
+.countBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  background: #eef4ff;
+  border-radius: 10px;
+}
+
+.countLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3b6fd4;
+}
+
+.countNum {
+  font-size: 14px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+/* ── 표 ── */
+.tableCard {
+  background: #fff;
+  border: 1px solid #eef0f4;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(20, 30, 50, 0.04);
+  overflow: hidden;
+}
+
+.tableHead,
+.row {
+  display: grid;
+  grid-template-columns: 48px 1.1fr 1.3fr 1.3fr 0.9fr 1.2fr 1fr 0.9fr 0.7fr 0.9fr;
+  align-items: center;
+}
+
+.tableHead {
+  padding: 16px 24px;
+  background: #f9fafd;
+  border-bottom: 1px solid #eef1f6;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #7a8397;
+}
+
+.headRight {
+  text-align: right;
+}
+
+.row {
+  padding: 18px 24px;
+  border-bottom: 1px solid #f2f4f8;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.12s;
+}
+
+.row:hover {
+  background: #f8faff;
+}
+
+.rowActive {
+  background: #f4f8ff;
+}
+
+.empty {
+  padding: 56px 24px;
+  text-align: center;
+  color: #9aa3b2;
+  font-size: 14px;
+}
+
+.badgeCourse,
+.badgeSource {
+  display: inline-flex;
+  padding: 4px 10px;
+  font-size: 12.5px;
+  border-radius: 7px;
+}
+
+.badgeCourse {
+  background: #eef4ff;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.badgeSource {
+  background: #f1f3f8;
+  color: #5a6377;
+  font-weight: 600;
+}
+
+.cellCourse {
+  font-weight: 600;
+  color: #2b3346;
+}
+
+.cellMuted {
+  color: #4b5468;
+}
+
+.cellName {
+  font-weight: 800;
+  color: #141b2e;
+}
+
+.cellPhone {
+  color: #4b5468;
+  font-variant-numeric: tabular-nums;
+}
+
+.cellMemo {
+  color: #9aa3b2;
+}
+
+.cellDate {
+  text-align: right;
+  color: #7a8397;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* ── 체크박스 ── */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1.8px solid #cbd3e0;
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkboxOn {
+  border-color: #2563eb;
+  background: #2563eb;
+}
+
+.checkMark {
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ── 페이지네이션 ── */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.pageArrow {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: #9aa3b2;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.pageArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageDot,
+.pageDotActive {
+  min-width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: #5a6274;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-family: inherit;
+}
+
+.pageDotActive {
+  background: #e7ecfb;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.pageGap {
+  color: #9aa3b2;
+  padding: 0 4px;
+}
+
+@media (max-width: 900px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+  .formCard {
+    position: static;
+  }
+}
