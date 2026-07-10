@@ -33,6 +33,7 @@ export default function AppHeader({
         { href: '/', label: '홈' },
         ...NAV,
         { href: '/admin', label: '관리자' },
+        { href: '/admin/reconcile', label: '정산대사' },
       ]
     : NAV
 
