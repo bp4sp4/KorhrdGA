@@ -260,7 +260,7 @@ export default function CustomersClient({ initial, userId }: { initial: Customer
     <div className={styles.page}>
       <div className={styles.body}>
         {/* 등록/수정 폼 */}
-        <aside className={styles.formCard}>
+        <aside className={styles.formCard} data-guide="customers-form">
           <div className={styles.formHeader}>
             <h2 className={styles.formTitle}>{editingId ? '가망고객 수정' : '가망고객 등록'}</h2>
             <p className={styles.formSub}>{editingId ? '선택한 가망고객 정보를 수정하세요' : '새 가망고객 정보를 입력하세요'}</p>
@@ -316,12 +316,12 @@ export default function CustomersClient({ initial, userId }: { initial: Customer
             </div>
             <div className={styles.headActions}>
               <button className={styles.ghostBtn} onClick={exportExcel}>엑셀 다운로드</button>
-              <button className={styles.ghostBtn} onClick={() => { setBulkMsg(null); setBulkOpen(true) }}>일괄등록</button>
+              <button className={styles.ghostBtn} onClick={() => { setBulkMsg(null); setBulkOpen(true) }} data-guide="customers-bulk">일괄등록</button>
             </div>
           </div>
 
           {/* 툴바 */}
-          <div className={styles.toolbar}>
+          <div className={styles.toolbar} data-guide="customers-search">
             <div className={styles.searchWrap}>
               <span className={styles.searchIcon}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
@@ -343,7 +343,7 @@ export default function CustomersClient({ initial, userId }: { initial: Customer
           </div>
 
           {/* 표 */}
-          <div className={styles.tableCard}>
+          <div className={styles.tableCard} data-guide="customers-table">
             <div className={styles.tableHead}>
               <div><Checkbox /></div>
               <div>과정유형</div><div>과정</div><div>기관</div><div>고객명</div><div>연락처</div><div>교육수준</div><div>제휴시설</div><div>기타사항</div>

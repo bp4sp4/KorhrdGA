@@ -1,0 +1,17 @@
+/* 가이드 본문 강조 헬퍼 */
+.bold {
+  font-weight: 700;
+  color: #111827;
+}
+.colorPrimary {
+  color: #2563eb;
+  font-weight: 600;
+}
+.colorWarn {
+  color: #d97706;
+  font-weight: 600;
+}
+.colorSuccess {
+  color: #059669;
+  font-weight: 600;
+}

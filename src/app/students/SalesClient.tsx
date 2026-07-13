@@ -943,10 +943,15 @@ export default function SalesClient({
               <button
                 className={st.settingsBtn}
                 onClick={() => setSettingsOpen(true)}
+                data-guide="students-settings"
               >
                 ⚙ 테이블설정
               </button>
-              <button className={st.primaryBtn} onClick={openAdd}>
+              <button
+                className={st.primaryBtn}
+                onClick={openAdd}
+                data-guide="students-add"
+              >
                 개별등록
               </button>
               <button
@@ -955,6 +960,7 @@ export default function SalesClient({
                   setBulkMsg(null);
                   setBulkOpen(true);
                 }}
+                data-guide="students-bulk"
               >
                 일괄등록
               </button>
@@ -964,7 +970,7 @@ export default function SalesClient({
 
         {/* 검색 + 액션 */}
         <div className={st.searchRow}>
-          <div className={st.searchWrap}>
+          <div className={st.searchWrap} data-guide="students-search">
             <span className={st.searchIcon}>
               <SearchIcon />
             </span>
@@ -993,7 +999,7 @@ export default function SalesClient({
         </div>
 
         {/* 기간 칩 */}
-        <div className={st.chipRow}>
+        <div className={st.chipRow} data-guide="students-filters">
           <div className={st.chipWrap}>
             <button
               className={
@@ -1131,7 +1137,7 @@ export default function SalesClient({
         </div>
 
         {/* 표 */}
-        <div className={st.tableWrap}>
+        <div className={st.tableWrap} data-guide="students-table">
           <table className={st.table}>
             <thead>
               <tr className={st.theadRow}>

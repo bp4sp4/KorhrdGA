@@ -452,7 +452,7 @@ export default function SalesFileClient({
 
         {/* 검색 + 액션 */}
         <div className={st.searchRow}>
-          <div className={st.searchWrap}>
+          <div className={st.searchWrap} data-guide="salesfile-search">
             <span className={st.searchIcon}>
               <SearchIcon />
             </span>
@@ -474,7 +474,7 @@ export default function SalesFileClient({
             >
               초기화
             </button>
-            <button className={st.excelBtn} onClick={exportExcel}>
+            <button className={st.excelBtn} onClick={exportExcel} data-guide="salesfile-excel">
               엑셀 다운로드
             </button>
           </div>
@@ -482,7 +482,7 @@ export default function SalesFileClient({
 
         {/* 결제기간 칩 */}
         <div className={st.chipRow}>
-          <div className={st.chipWrap}>
+          <div className={st.chipWrap} data-guide="salesfile-period">
             <button
               className={
                 payFrom || payTo ? `${st.chip} ${st.chipActive}` : st.chip
@@ -545,7 +545,7 @@ export default function SalesFileClient({
         </div>
 
         {/* 표 */}
-        <div className={st.tableWrap}>
+        <div className={st.tableWrap} data-guide="salesfile-table">
           <table className={sf.table}>
             <thead className={sf.thead}>
               <tr>

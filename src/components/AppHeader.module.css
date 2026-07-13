@@ -115,3 +115,19 @@
     display: none;
   }
 }
+
+.guideBtn {
+  height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.guideBtn:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}

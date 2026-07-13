@@ -1,0 +1,206 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  /* spotlight 영역만 비우고 나머지는 옅게 어둡게 — 페이지 요소는 그대로 보임 */
+  background: rgba(15, 23, 42, 0.08);
+  pointer-events: none;
+  transition: opacity 200ms;
+}
+
+/* spotlight 외부 클릭을 차단하는 4개 패널 */
+.blocker {
+  position: fixed;
+  background: transparent;
+  pointer-events: auto;
+  z-index: 9050;
+}
+
+.blockerFull {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  pointer-events: auto;
+  z-index: 9050;
+}
+
+.spotlight {
+  position: absolute;
+  border-radius: 12px;
+  background: transparent;
+  border: 2.5px solid #2563eb;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.18);
+  pointer-events: none;
+  transition:
+    top 380ms cubic-bezier(0.4, 0, 0.2, 1),
+    left 380ms cubic-bezier(0.4, 0, 0.2, 1),
+    width 380ms cubic-bezier(0.4, 0, 0.2, 1),
+    height 380ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 9999px rgba(15, 23, 42, 0.18),
+      0 0 0 0 rgba(37, 99, 235, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 0 9999px rgba(15, 23, 42, 0.18),
+      0 0 0 10px rgba(37, 99, 235, 0);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  padding: 20px 22px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9100;
+  transition:
+    top 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    left 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 200ms ease;
+  animation: tooltipIn 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes tooltipIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltipCenter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* compact: 우측 하단 고정 작은 패널 */
+.tooltipCorner {
+  position: fixed;
+  top: auto;
+  bottom: 24px;
+  right: 24px;
+  left: auto;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  z-index: 9100;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.body {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #4b5563;
+  white-space: pre-wrap;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.progress {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btnGhost {
+  padding: 7px 14px;
+  background: #fff;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 120ms,
+    border-color 120ms;
+}
+
+.btnGhost:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.btnPrimary {
+  padding: 7px 18px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms;
+}
+
+.btnPrimary:hover {
+  background: #1d4ed8;
+}

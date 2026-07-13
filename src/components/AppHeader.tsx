@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import GuidePicker from '@/components/guide/GuidePicker'
 import styles from './AppHeader.module.css'
 
 const NAV = [
@@ -20,6 +22,7 @@ export default function AppHeader({
 }) {
   const pathname = usePathname()
   const router = useRouter()
+  const [guideOpen, setGuideOpen] = useState(false)
 
   async function handleLogout() {
     const supabase = createClient()
@@ -63,6 +66,14 @@ export default function AppHeader({
       </div>
 
       <div className={styles.right}>
+        <button
+          className={styles.guideBtn}
+          type="button"
+          onClick={() => setGuideOpen(true)}
+          title="화면 사용법 가이드 다시 보기"
+        >
+          가이드
+        </button>
         <span className={styles.user}>
           {displayName}
           <span className={isAdmin ? styles.badgeAdmin : styles.badgeAgent}>
@@ -73,6 +84,7 @@ export default function AppHeader({
           로그아웃
         </button>
       </div>
+      <GuidePicker open={guideOpen} onClose={() => setGuideOpen(false)} />
     </header>
   )
 }
