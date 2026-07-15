@@ -161,7 +161,6 @@ export default function SalesFileClient({
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const safePage = Math.min(page, pageCount);
   const paged = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
-  const hasFilter = !!search || !!payFrom || !!payTo;
 
   // ── 인라인 편집: 셀 변경 즉시 저장 ─────────────────────────────
   async function patchRow(row: Sale, patch: Partial<Sale>) {
@@ -196,14 +195,6 @@ export default function SalesFileClient({
       return;
     }
     await reload();
-  }
-
-  function resetFilters() {
-    setSearch("");
-    setPayFrom("");
-    setPayTo("");
-    setPicker(false);
-    setPage(1);
   }
 
   async function exportExcel() {
@@ -466,22 +457,11 @@ export default function SalesFileClient({
               placeholder="학생명, 전화번호, 교육원, 담당자, 처리번호로 검색..."
             />
           </div>
-          <div className={st.rowRight}>
-            <button
-              className={st.resetBtn}
-              onClick={resetFilters}
-              disabled={!hasFilter}
-            >
-              초기화
-            </button>
-            <button className={st.excelBtn} onClick={exportExcel} data-guide="salesfile-excel">
-              엑셀 다운로드
-            </button>
-          </div>
         </div>
 
-        {/* 결제기간 칩 */}
+        {/* 결제기간 칩 + 엑셀 */}
         <div className={st.chipRow}>
+          <div className={st.chipLeft}>
           <div className={st.chipWrap} data-guide="salesfile-period">
             <button
               className={
@@ -489,7 +469,25 @@ export default function SalesFileClient({
               }
               onClick={() => setPicker((v) => !v)}
             >
-              <CalendarIcon /> 결제기간선택
+              <CalendarIcon />
+              {payFrom || payTo
+                ? `${payFrom || "…"} ~ ${payTo || "…"}`
+                : "결제기간선택"}
+              {(payFrom || payTo) && (
+                <span
+                  role="button"
+                  className={st.chipClear}
+                  aria-label="결제기간 해제"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPayFrom("");
+                    setPayTo("");
+                    setPage(1);
+                  }}
+                >
+                  ×
+                </span>
+              )}
             </button>
             {picker && (
               <div className={st.calPop} onClick={(e) => e.stopPropagation()}>
@@ -514,23 +512,14 @@ export default function SalesFileClient({
               </div>
             )}
           </div>
-          {(payFrom || payTo) && (
-            <span className={st.rangePill}>
-              {payFrom || "…"} ~ {payTo || "…"}
-              <button
-                type="button"
-                className={st.rangePillX}
-                onClick={() => {
-                  setPayFrom("");
-                  setPayTo("");
-                  setPage(1);
-                }}
-                aria-label="결제기간 해제"
-              >
-                ×
-              </button>
-            </span>
-          )}
+          </div>
+          <button
+            className={st.excelBtn}
+            onClick={exportExcel}
+            data-guide="salesfile-excel"
+          >
+            엑셀 다운로드
+          </button>
         </div>
 
         {/* 요약 */}

@@ -212,7 +212,7 @@ export default function SalesClient({
   initial,
   userId,
   readOnly = false,
-  heading = "매출등록",
+  heading = "학습자 신규",
   managerName = "",
   viewConfig = {},
 }: {
@@ -340,7 +340,6 @@ export default function SalesClient({
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const safePage = Math.min(page, pageCount);
   const paged = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
-  const hasFilter = !!search || !!regFrom || !!regTo || !!payFrom || !!payTo;
 
   const pageIds = paged.map((r) => r.id);
   const allChecked =
@@ -362,16 +361,6 @@ export default function SalesClient({
       return next;
     });
   }
-  function resetFilters() {
-    setSearch("");
-    setRegFrom("");
-    setRegTo("");
-    setPayFrom("");
-    setPayTo("");
-    setPicker(null);
-    setPage(1);
-  }
-
   async function reload() {
     const { data } = await supabase
       .from("sales")
@@ -524,8 +513,8 @@ export default function SalesClient({
     }));
     const ws = XLSX.utils.json_to_sheet(data, { header: [...EXCEL_HEADERS] });
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "매출등록");
-    XLSX.writeFile(wb, "매출등록_내역.xlsx");
+    XLSX.utils.book_append_sheet(wb, ws, "학습자 신규");
+    XLSX.writeFile(wb, "학습자신규_내역.xlsx");
   }
   async function downloadTemplate() {
     const XLSX = await import("xlsx");
@@ -554,7 +543,7 @@ export default function SalesClient({
     ]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "템플릿");
-    XLSX.writeFile(wb, "매출등록_일괄등록_템플릿.xlsx");
+    XLSX.writeFile(wb, "학습자신규_일괄등록_템플릿.xlsx");
   }
   // 파일 선택 → 파싱 + 행별 검증 (아직 저장하지 않고 미리보기만)
   async function handleBulkFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -938,6 +927,24 @@ export default function SalesClient({
         {/* 타이틀 */}
         <div className={st.titleRow}>
           <h1 className={st.h1}>{heading}</h1>
+        </div>
+
+        {/* 검색 + 액션 */}
+        <div className={st.searchRow}>
+          <div className={st.searchWrap} data-guide="students-search">
+            <span className={st.searchIcon}>
+              <SearchIcon />
+            </span>
+            <input
+              className={st.searchInput}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              placeholder="고객명, 연락처, 기관명, 담당자로 검색..."
+            />
+          </div>
           {editable && (
             <div className={st.headActions}>
               <button
@@ -968,38 +975,9 @@ export default function SalesClient({
           )}
         </div>
 
-        {/* 검색 + 액션 */}
-        <div className={st.searchRow}>
-          <div className={st.searchWrap} data-guide="students-search">
-            <span className={st.searchIcon}>
-              <SearchIcon />
-            </span>
-            <input
-              className={st.searchInput}
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-              placeholder="고객명, 연락처, 기관명, 담당자로 검색..."
-            />
-          </div>
-          <div className={st.rowRight}>
-            <button
-              className={st.resetBtn}
-              onClick={resetFilters}
-              disabled={!hasFilter}
-            >
-              초기화
-            </button>
-            <button className={st.excelBtn} onClick={exportExcel}>
-              엑셀 다운로드
-            </button>
-          </div>
-        </div>
-
-        {/* 기간 칩 */}
-        <div className={st.chipRow} data-guide="students-filters">
+        {/* 기간 칩 + 엑셀 */}
+        <div className={st.chipRow}>
+          <div className={st.chipLeft} data-guide="students-filters">
           <div className={st.chipWrap}>
             <button
               className={
@@ -1007,7 +985,25 @@ export default function SalesClient({
               }
               onClick={() => setPicker(picker === "reg" ? null : "reg")}
             >
-              <CalendarIcon /> 등록기간선택
+              <CalendarIcon />
+              {regFrom || regTo
+                ? `${regFrom || "…"} ~ ${regTo || "…"}`
+                : "등록기간선택"}
+              {(regFrom || regTo) && (
+                <span
+                  role="button"
+                  className={st.chipClear}
+                  aria-label="등록기간 해제"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setRegFrom("");
+                    setRegTo("");
+                    setPage(1);
+                  }}
+                >
+                  ×
+                </span>
+              )}
             </button>
             {picker === "reg" && (
               <div className={st.calPop} onClick={(e) => e.stopPropagation()}>
@@ -1032,24 +1028,6 @@ export default function SalesClient({
               </div>
             )}
           </div>
-          {(regFrom || regTo) && (
-            <span className={st.rangePill}>
-              {regFrom || "…"} ~ {regTo || "…"}
-              <button
-                type="button"
-                className={st.rangePillX}
-                onClick={() => {
-                  setRegFrom("");
-                  setRegTo("");
-                  setPage(1);
-                }}
-                aria-label="등록기간 해제"
-              >
-                ×
-              </button>
-            </span>
-          )}
-
           <div className={st.chipWrap}>
             <button
               className={
@@ -1057,7 +1035,25 @@ export default function SalesClient({
               }
               onClick={() => setPicker(picker === "pay" ? null : "pay")}
             >
-              <CalendarIcon /> 결제기간선택
+              <CalendarIcon />
+              {payFrom || payTo
+                ? `${payFrom || "…"} ~ ${payTo || "…"}`
+                : "결제기간선택"}
+              {(payFrom || payTo) && (
+                <span
+                  role="button"
+                  className={st.chipClear}
+                  aria-label="결제기간 해제"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPayFrom("");
+                    setPayTo("");
+                    setPage(1);
+                  }}
+                >
+                  ×
+                </span>
+              )}
             </button>
             {picker === "pay" && (
               <div className={st.calPop} onClick={(e) => e.stopPropagation()}>
@@ -1082,24 +1078,6 @@ export default function SalesClient({
               </div>
             )}
           </div>
-          {(payFrom || payTo) && (
-            <span className={st.rangePill}>
-              {payFrom || "…"} ~ {payTo || "…"}
-              <button
-                type="button"
-                className={st.rangePillX}
-                onClick={() => {
-                  setPayFrom("");
-                  setPayTo("");
-                  setPage(1);
-                }}
-                aria-label="결제기간 해제"
-              >
-                ×
-              </button>
-            </span>
-          )}
-
           {editable && selected.size > 0 && (
             <div className={st.selActions}>
               <button
@@ -1124,6 +1102,10 @@ export default function SalesClient({
               </button>
             </div>
           )}
+          </div>
+          <button className={st.excelBtn} onClick={exportExcel}>
+            엑셀 다운로드
+          </button>
         </div>
 
         {/* 요약 */}

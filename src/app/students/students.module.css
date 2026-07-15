@@ -108,15 +108,10 @@
   box-shadow: 0 0 0 3px rgba(47, 95, 239, 0.12);
 }
 
-.rowRight {
-  display: flex;
-  gap: 12px;
-}
-
-.resetBtn,
 .excelBtn {
-  border: none;
-  color: #fff;
+  border: 1px solid #e2e6ee;
+  background: #fff;
+  color: #3a4256;
   font-family: inherit;
   border-radius: 10px;
   font-size: 15px;
@@ -125,37 +120,23 @@
   cursor: pointer;
 }
 
-.resetBtn {
-  background: #5a6274;
-}
-
-.resetBtn:hover:not(:disabled) {
-  background: #454b59;
-}
-
-.resetBtn:active:not(:disabled) {
-  transform: translateY(1px);
-}
-
-.resetBtn:disabled {
-  background: #eceef2;
-  color: #b3bacb;
-  cursor: not-allowed;
-}
-
-.excelBtn {
-  background: #2f5fef;
-}
-
 .excelBtn:hover {
-  background: #1e4fd8;
+  background: #f7f9fc;
 }
 
 /* 기간 칩 */
 .chipRow {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
   margin-bottom: 22px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.chipLeft {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
   align-items: center;
 }
@@ -196,31 +177,23 @@
   box-shadow: 0 12px 32px rgba(20, 30, 50, 0.16);
 }
 
-.rangePill {
+/* 칩 내부 기간 해제 X */
+.chipClear {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 40px;
-  padding: 0 6px 0 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2f5fef;
-  background: #eef3ff;
-  border: 1px solid #c7d7ff;
-  border-radius: 10px;
-  white-space: nowrap;
-}
-
-.rangePillX {
+  justify-content: center;
   width: 22px;
   height: 22px;
-  border: none;
   background: #dbe4ff;
   color: #2f5fef;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
+}
+
+.chipClear:hover {
+  background: #c7d7ff;
 }
 
 .selActions {
@@ -299,24 +272,25 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .theadRow {
-  background: #fff;
-  border-bottom: 1px solid #eef0f4;
+  background: #f9fafd;
+  border-bottom: 1px solid #eef1f6;
 }
 
 .checkTh {
-  padding: 18px 12px;
+  padding: 16px 12px;
   text-align: center;
   width: 52px;
 }
 
 .th {
-  padding: 18px 12px;
+  padding: 16px 12px;
+  font-size: 12.5px;
   font-weight: 700;
-  color: #5a6274;
+  color: #7a8397;
   white-space: nowrap;
   text-align: center;
 }
@@ -324,20 +298,20 @@
 .checkbox {
   width: 18px;
   height: 18px;
-  accent-color: #2f5fef;
+  accent-color: #2563eb;
   cursor: pointer;
 }
 
 .checkCell {
-  padding: 17px 12px;
+  padding: 18px 12px;
   text-align: center;
 }
 
 .td {
-  padding: 17px 12px;
+  padding: 18px 12px;
   text-align: center;
   white-space: nowrap;
-  color: #2b3244;
+  color: #2b3346;
 }
 
 .ellipsis {
@@ -350,19 +324,20 @@
 }
 
 .row {
-  border-bottom: 1px solid #f3f5f9;
+  border-bottom: 1px solid #f2f4f8;
   background: #fff;
   cursor: pointer;
+  transition: background 0.12s;
 }
 
 .row:hover {
-  background: #f7f9fd;
+  background: #f8faff;
 }
 
 .emptyCell {
-  padding: 48px 12px;
+  padding: 56px 24px;
   text-align: center;
-  color: #9aa2b1;
+  color: #9aa3b2;
 }
 
 /* 페이지네이션 */

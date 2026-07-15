@@ -47,7 +47,7 @@ export default async function StudentsPage() {
         initial={(sales as Sale[]) ?? []}
         customers={customers ?? []}
         userId={user.id}
-        heading="매출등록"
+        heading="학습자 신규"
         managerName={displayName}
         viewConfig={(pref?.sales_view as SalesViewConfig) ?? {}}
       />

@@ -3,36 +3,36 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 14px;
   min-width: 1400px;
 }
 
 .thead {
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e8eb;
+  background: #f9fafd;
+  border-bottom: 1px solid #eef1f6;
 }
 
 .th {
-  padding: 10px 12px;
+  padding: 16px 12px;
   text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: #4b5563;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #7a8397;
   white-space: nowrap;
 }
 
 .tr {
-  border-bottom: 1px solid #f0f1f3;
-  transition: background 0.1s;
+  border-bottom: 1px solid #f2f4f8;
+  transition: background 0.12s;
 }
 
 .tr:hover {
-  background: #fafbfc;
+  background: #f8faff;
 }
 
 .td {
-  padding: 10px 12px;
-  color: #191f28;
+  padding: 14px 12px;
+  color: #2b3346;
   white-space: nowrap;
   vertical-align: middle;
   text-align: center;
@@ -54,16 +54,16 @@
   border: 1px solid transparent;
   border-radius: 5px;
   background: transparent;
-  font-size: 13px;
-  color: #191f28;
+  font-size: 14px;
+  color: #2b3346;
   outline: none;
   text-align: center;
   transition: background 0.12s, border-color 0.12s;
 }
 
 .inlineInput:hover {
-  background: #f9fafb;
-  border-color: #e5e8eb;
+  background: #f4f7fd;
+  border-color: #e2e6ee;
 }
 
 .inlineInput:focus {
@@ -73,7 +73,7 @@
 
 .inlineInput:disabled {
   cursor: default;
-  color: #191f28;
+  color: #2b3346;
 }
 
 .inlineSelect {
@@ -82,16 +82,16 @@
   border: 1px solid transparent;
   border-radius: 5px;
   background: transparent;
-  font-size: 13px;
-  color: #191f28;
+  font-size: 14px;
+  color: #2b3346;
   outline: none;
   cursor: pointer;
   transition: background 0.12s, border-color 0.12s;
 }
 
 .inlineSelect:hover {
-  background: #f9fafb;
-  border-color: #e5e8eb;
+  background: #f4f7fd;
+  border-color: #e2e6ee;
 }
 
 .inlineSelect:focus {
@@ -112,8 +112,8 @@
   border: 1px solid transparent !important;
   border-radius: 5px !important;
   background: transparent !important;
-  font-size: 12px !important;
-  color: #191f28 !important;
+  font-size: 13px !important;
+  color: #2b3346 !important;
   min-width: 108px;
   cursor: pointer;
   text-align: center !important;
@@ -122,8 +122,8 @@
 }
 
 .inlineDateTrigger:hover {
-  background: #f9fafb !important;
-  border-color: #e5e8eb !important;
+  background: #f4f7fd !important;
+  border-color: #e2e6ee !important;
 }
 
 .inlineDateTrigger:focus,

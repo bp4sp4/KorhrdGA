@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-07-13T03:31:06.185Z",
+  "lastUpdated": "2026-07-15T07:38:55.747Z",
   "activeFeatures": [
     "ga-crm",
     "login",
@@ -9,7 +9,10 @@
     "customers",
     "admin",
     "reconcile",
-    "guide"
+    "guide",
+    "marketing",
+    "ai-content",
+    "layout"
   ],
   "primaryFeature": "ga-crm",
   "features": {
@@ -22,7 +25,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-06T09:21:38.444Z",
-        "lastUpdated": "2026-07-13T03:17:37.634Z"
+        "lastUpdated": "2026-07-13T07:00:48.052Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/components/AppHeader.tsx"
     },
@@ -48,7 +51,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-06T09:27:08.116Z",
-        "lastUpdated": "2026-07-13T03:18:06.255Z"
+        "lastUpdated": "2026-07-15T06:32:57.208Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/students/SalesClient.tsx"
     },
@@ -61,7 +64,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-06T09:36:43.763Z",
-        "lastUpdated": "2026-07-13T03:18:40.589Z"
+        "lastUpdated": "2026-07-15T06:32:59.567Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/sales/SalesFileClient.tsx"
     },
@@ -74,7 +77,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-07T01:47:31.949Z",
-        "lastUpdated": "2026-07-13T03:18:23.360Z"
+        "lastUpdated": "2026-07-15T07:38:55.747Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/app/customers/CustomersClient.tsx"
     },
@@ -116,6 +119,45 @@
         "lastUpdated": "2026-07-13T03:31:06.185Z"
       },
       "lastFile": "/Users/korhrd/Documents/GitHub/ga-crm/src/components/guide/GuideProvider.tsx"
+    },
+    "marketing": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-13T06:58:49.550Z",
+        "lastUpdated": "2026-07-13T08:13:55.923Z"
+      },
+      "lastFile": "/Users/korhrd/Documents/GitHub/KorhrdGroupDB/src/app/(dashboard)/marketing/AiContentTab.tsx"
+    },
+    "ai-content": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-13T06:59:14.728Z",
+        "lastUpdated": "2026-07-13T08:10:15.295Z"
+      },
+      "lastFile": "/Users/korhrd/Documents/GitHub/KorhrdGroupDB/src/app/api/marketing/ai-content/route.ts"
+    },
+    "layout": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-13T07:53:18.352Z",
+        "lastUpdated": "2026-07-13T07:53:18.352Z"
+      },
+      "lastFile": "/Users/korhrd/Documents/GitHub/KorhrdGroupDB/src/components/layout/navConfig.tsx"
     }
   },
   "pipeline": {
@@ -126,7 +168,7 @@
   "session": {
     "startedAt": "2026-07-06T09:19:37.494Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-07-13T03:31:06.185Z"
+    "lastActivity": "2026-07-15T07:38:55.747Z"
   },
   "history": [
     {
@@ -1704,6 +1746,378 @@
     {
       "timestamp": "2026-07-13T03:31:06.185Z",
       "feature": "guide",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T06:58:49.550Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T06:59:14.728Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T06:59:21.918Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:00:02.734Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:00:42.446Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:00:48.052Z",
+      "feature": "ga-crm",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:01:03.751Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:01:09.660Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:01:18.991Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:01:22.587Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:01:27.932Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:01:31.743Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:51:10.322Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:51:34.208Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:52:18.539Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:53:02.270Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:53:07.511Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:53:12.248Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T07:53:18.352Z",
+      "feature": "layout",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:11.562Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:15.866Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:21.700Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:30.577Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:37.113Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:42.509Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:08:47.545Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:09:36.834Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:09:43.921Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:09:49.182Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:09:56.976Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:10:05.561Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:10:15.295Z",
+      "feature": "ai-content",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-13T08:13:55.923Z",
+      "feature": "marketing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:25:56.921Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:25:57.843Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:00.215Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:01.795Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:19.124Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:30.237Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:38.752Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:39.918Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:44.212Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:26:53.290Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:28:05.978Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T05:28:07.791Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:30:29.823Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:30:32.602Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:30:35.870Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:30:37.918Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:30:47.847Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:30:54.308Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:32:55.304Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:32:57.208Z",
+      "feature": "students",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:32:59.567Z",
+      "feature": "sales",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:41:46.816Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:43:45.621Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:44:56.832Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T06:53:55.737Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T07:35:18.454Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T07:35:20.740Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T07:38:53.392Z",
+      "feature": "customers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-15T07:38:55.747Z",
+      "feature": "customers",
       "phase": "do",
       "action": "updated"
     }

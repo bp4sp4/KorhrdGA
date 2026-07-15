@@ -52,15 +52,20 @@ function SelectField({ label, value, options, onChange }: { label: string; value
 }
 
 function FilterSelect({ label, value, options, onChange }: { label: string; value: string; options: readonly string[]; onChange: (v: string) => void }) {
+  const active = value !== '전체'
   return (
-    <div className={styles.filterGroup}>
-      <span className={styles.filterLabel}>{label}</span>
-      <div className={styles.selectWrap}>
-        <select className={styles.filterSelect} value={value} onChange={(e) => onChange(e.target.value)}>
-          {options.map((o) => <option key={o}>{o}</option>)}
-        </select>
-        <span className={styles.caret}>▾</span>
-      </div>
+    <div className={styles.selectWrap}>
+      <select
+        className={active ? `${styles.filterSelect} ${styles.filterSelectActive}` : styles.filterSelect}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        <option value="전체">{label}</option>
+        {options.filter((o) => o !== '전체').map((o) => <option key={o}>{o}</option>)}
+      </select>
+      <span className={styles.caretIcon}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+      </span>
     </div>
   )
 }
@@ -314,15 +319,11 @@ export default function CustomersClient({ initial, userId }: { initial: Customer
               <h1 className={styles.h1}>가망고객</h1>
               <p className={styles.subtitle}>등록된 가망고객을 검색하고 관리하세요</p>
             </div>
-            <div className={styles.headActions}>
-              <button className={styles.ghostBtn} onClick={exportExcel}>엑셀 다운로드</button>
-              <button className={styles.ghostBtn} onClick={() => { setBulkMsg(null); setBulkOpen(true) }} data-guide="customers-bulk">일괄등록</button>
-            </div>
           </div>
 
-          {/* 툴바 */}
-          <div className={styles.toolbar} data-guide="customers-search">
-            <div className={styles.searchWrap}>
+          {/* 검색 + 액션 */}
+          <div className={styles.searchRow}>
+            <div className={styles.searchWrap} data-guide="customers-search">
               <span className={styles.searchIcon}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
               </span>
@@ -333,13 +334,21 @@ export default function CustomersClient({ initial, userId }: { initial: Customer
                 placeholder="고객명, 연락처, 기관명으로 검색..."
               />
             </div>
-            <FilterSelect label="연도" value={year} options={years} onChange={(v) => { setYear(v); setPage(1) }} />
-            <FilterSelect label="월" value={month} options={months} onChange={(v) => { setMonth(v); setPage(1) }} />
-            <div className={styles.countBadge}>
-              <span className={styles.countLabel}>총</span>
-              <span className={styles.countNum}>{filtered.length}</span>
-              <span className={styles.countLabel}>명</span>
+            <button className={styles.primaryBtn} onClick={() => { setBulkMsg(null); setBulkOpen(true) }} data-guide="customers-bulk">일괄등록</button>
+          </div>
+
+          {/* 연도/월 필터 + 엑셀 */}
+          <div className={styles.filterRow}>
+            <div className={styles.filterLeft}>
+              <FilterSelect label="연도" value={year} options={years} onChange={(v) => { setYear(v); setPage(1) }} />
+              <FilterSelect label="월" value={month} options={months} onChange={(v) => { setMonth(v); setPage(1) }} />
             </div>
+            <button className={styles.excelBtn} onClick={exportExcel}>엑셀 다운로드</button>
+          </div>
+
+          {/* 요약 */}
+          <div className={styles.summaryRow}>
+            <span>총 {filtered.length.toLocaleString('ko-KR')}명의 데이터</span>
           </div>
 
           {/* 표 */}
